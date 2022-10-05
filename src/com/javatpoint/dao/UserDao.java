@@ -74,4 +74,23 @@ public static List<User> getAllRecords(){
 	return list;
 }
 // getRecordById(int id)
+public static User getRecordById(int id){
+	User u=null;
+	try{
+		Connection con=getConnection();
+		PreparedStatement ps=con.prepareStatement("select * from register where id=?");
+		ps.setInt(1,id);
+		ResultSet rs=ps.executeQuery();
+		while(rs.next()){
+			u=new User();
+			u.setId(rs.getInt("id"));
+			u.setName(rs.getString("name"));
+			u.setPassword(rs.getString("password"));
+			u.setEmail(rs.getString("email"));
+			u.setSex(rs.getString("sex"));
+			u.setCountry(rs.getString("country"));
+		}
+	}catch(Exception e){System.out.println(e);}
+	return u;
+}
 }
